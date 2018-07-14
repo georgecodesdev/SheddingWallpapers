@@ -1,5 +1,6 @@
 import sys
 import datetime
+from screeninfo import get_monitors
 
 def main():
     #if the user wants to apply the wallpapers form an alternate dir
@@ -16,12 +17,18 @@ def applyWallpaper(filePath):
     # Grabbing the current month as an int an converting it to a name
     currMonth = datetime.datetime.now().strftime("%m")
     currMonth = numbers_to_months(currMonth)
-    print(currMonth)
     # If the user wants to use the default wallpapers
     if not filePath:
-        print()
+        ## transform the image
+        ## apply the image
+        transformImage("")
     else:
+        ## apply the image
         print()
+
+def transformImage(currMonth):
+    for m in get_monitors():
+        print(str(m))
 
 # --- Simple number to month conversions ---
 def numbers_to_months(argument):
@@ -43,7 +50,6 @@ def numbers_to_months(argument):
     # Get the function from switcher dictionary
     func = switcher.get(argument.strip('0'), "ERROR: Invalid Month Passed in")
     return func
-
 
 if __name__ == '__main__':
     main()
