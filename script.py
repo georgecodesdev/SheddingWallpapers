@@ -1,8 +1,6 @@
 import sys
 import datetime
-from screeninfo import get_monitors
-from PIL import Image
-
+import os
 def main():
     #if the user wants to apply the wallpapers form an alternate dir
     if (len(sys.argv) == 2):
@@ -15,56 +13,41 @@ def checkAlternateLDir(filePath):
     print("Am I actually getting called?" + filePath)
 
 def applyWallpaper(filePath):
+    # If the user wants to use the default wallpapers
+    if not filePath:
+        applyImage("")
+    else:
+        applyImage(filePath)
+
+def applyImage(filePath):
     # Grabbing the current month as an int an converting it to a name
     currMonth = datetime.datetime.now().strftime("%m")
     currMonth = numbers_to_months(currMonth)
-    # If the user wants to use the default wallpapers
+
+    # If we are dealing with the default wallpapers
+
     if not filePath:
-        ## transform the image
-        ## apply the image
-        transformImage(currMonth)
-    else:
-        ## apply the image
-        print()
-
-def transformImage(currMonth):
-    # The dimensions of the screen we are currently looking at
-    width = 0
-    height = 0
-
-    # We are looping though all the monitors that the user has, and saving the largest one for transformation
-    for m in get_monitors():
-        if (width < m.width and height < m.height):
-            width = m.width
-            height = m.height
-
-    # Saving a ref to the old image
-    newSize = (width, height)
-    uneditedImage = Image.open("wallpapers/" + str(currMonth) + ".jpg")
-    # Changing the size of the image, and saving the output
-    editImage = uneditedImage.resize(newSize)
-    editImage.save("wallpapers/" + str(currMonth) + ".jpg")
-
-
-
-
+        # Applying the correct wallpaper for the month
+        currMonthFilePath = os.path.abspath("wallpapers/" + str(currMonth) + ".jpg")
+        os.system("gsettings set org.gnome.desktop.background picture-uri file:" + currMonthFilePath)
+        os.system("gsettings set org.gnome.desktop.background picture-options \"zoom\"")
 
 # --- Simple number to month conversions ---
 def numbers_to_months(argument):
     # Stripping the leading 0s that datetime gives
     switcher = {
-        '1': "january",
-        '2': "february",
-        '3': "march",
-        '4': "april",
-        '5': "may",
-        '6': "june",
-        '7': "july",
-        '8': "august",
-        '9': "september",
-        '10': "october",
-        '11': "november",
-        '12': "december"
+        '1': "January",
+        '2': "February",
+        '3': "March",
+        '4': "April",
+        '5': "May",
+        '6': "June",
+        '7': "July",
+        '8': "August",
+        '9': "September",
+        '10': "October",
+        '11': "November",
+        '12': "December"
     }
     # Get the function from switcher dictionary
     func = switcher.get(argument.strip('0'), "ERROR: Invalid Month Passed in")
