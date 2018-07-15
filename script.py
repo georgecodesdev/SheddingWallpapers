@@ -1,6 +1,7 @@
 import sys
 import datetime
 from screeninfo import get_monitors
+from PIL import Image
 
 def main():
     #if the user wants to apply the wallpapers form an alternate dir
@@ -21,14 +22,32 @@ def applyWallpaper(filePath):
     if not filePath:
         ## transform the image
         ## apply the image
-        transformImage("")
+        transformImage(currMonth)
     else:
         ## apply the image
         print()
 
 def transformImage(currMonth):
+    # The dimensions of the screen we are currently looking at
+    width = 0
+    height = 0
+
+    # We are looping though all the monitors that the user has, and saving the largest one for transformation
     for m in get_monitors():
-        print(str(m))
+        if (width < m.width and height < m.height):
+            width = m.width
+            height = m.height
+
+    # Saving a ref to the old image
+    newSize = (width, height)
+    uneditedImage = Image.open("wallpapers/" + str(currMonth) + ".jpg")
+    # Changing the size of the image, and saving the output
+    editImage = uneditedImage.resize(newSize)
+    editImage.save("wallpapers/" + str(currMonth) + ".jpg")
+
+
+
+
 
 # --- Simple number to month conversions ---
 def numbers_to_months(argument):
