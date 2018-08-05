@@ -2,8 +2,10 @@ import sys
 import datetime
 import os
 import platform
+import threading
 from screeninfo import get_monitors
 from PIL import Image
+
 
 def main():
     if (len(sys.argv) == 2):
@@ -12,8 +14,9 @@ def main():
         transformImages()
         applyImage("")
 
+
 def checkAlternateLDir():
-    #todo actually check the dir
+    # todo actually check the dir
     if (os.path.isdir(sys.argv[1])):
         applyImage(sys.argv[1])
     else:
@@ -24,8 +27,7 @@ def checkAlternateLDir():
 
 def applyImage(filePath):
     # Grabbing the current month as an int an converting it to a name
-    currMonth = datetime.datetime.now().strftime("%m")
-    currMonth = numbers_to_months(currMonth)
+    currMonth = numbers_to_months()
 
     # If we are dealing with the default wallpapers
     if not filePath:
@@ -39,29 +41,42 @@ def applyImage(filePath):
         elif (platform.system() == "Darwin"):
             print("mac support not yet implemented")
     else:
-        #todo implement alternate dir support
+        # todo implement alternate dir support
         print("")
 
-def transformImages():
 
+def transformImages():
     # If we have transformed the images then we dont want to do it again
     if os.path.exists("editedWallpapers/"):
         return
     else:
         os.makedirs("editedWallpapers/")
 
-    currMonth = datetime.datetime.now().strftime("%m")
-    currMonth = numbers_to_months(currMonth)
-
-
-    uneditedImage = Image.open("wallpapers/" + str(currMonth) + ".jpg")
-
+    monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                  "November", "December"]
     currWidth = getMonitorResolution()
+
+    #Keeping Track of all the threads we are currently using
+    threadArray = []
+
+    # Calling threads to apply the transformations to all images
+    for currMonth in monthArray:
+        thread = threading.Thread(target=upscaleImage, args=(currMonth,currWidth,))
+        thread.start()
+        threadArray.append(thread)
+
+    for currThread in threadArray:
+        print("active Threads: ", threading.active_count())
+        currThread.join()
+
+
+def upscaleImage(month, currWidth):
+    uneditedImage = Image.open("wallpapers/" + str(month) + ".jpg")
     # Changing the size of the image, and saving the output
     wpercent = (currWidth / float(uneditedImage.size[0]))
     hsize = int((float(uneditedImage.size[1]) * float(wpercent)))
     editedImage = uneditedImage.resize((currWidth, hsize), Image.LANCZOS)
-    editedImage.save("editedWallpapers/" + str(currMonth) + ".jpg")
+    editedImage.save("editedWallpapers/" + str(month) + ".jpg")
 
 
 def getMonitorResolution():
@@ -77,7 +92,7 @@ def getMonitorResolution():
 
 
 # --- Simple number to month conversions ---
-def numbers_to_months(argument):
+def numbers_to_months():
     # Stripping the leading 0s that datetime gives
     switcher = {
         '1': "January",
@@ -94,8 +109,10 @@ def numbers_to_months(argument):
         '12': "December"
     }
     # Get the function from switcher dictionary
-    func = switcher.get(argument.strip('0'), "ERROR: Invalid Month Passed in")
+    currMonth = datetime.datetime.now().strftime("%m")
+    func = switcher.get(currMonth.strip('0'), "ERROR: Invalid Month Passed in")
     return func
+
 
 if __name__ == '__main__':
     main()
