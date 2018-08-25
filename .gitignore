@@ -1,0 +1,8 @@
+# __pycache__
+__pycache/
+
+# ignore all logs
+Log/
+
+# .idea
+.idea/

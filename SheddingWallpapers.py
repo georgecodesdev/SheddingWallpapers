@@ -45,7 +45,7 @@ def main():
         apply_image(sys.argv[1])
     else:
         apply_image("")
-skld;
+
 
 def apply_image(file_path):
     # Grabbing the current month
