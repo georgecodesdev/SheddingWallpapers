@@ -24,8 +24,19 @@ import os
 import sys
 import subprocess
 import configparser
+import logging
 
+from logging import handlers
 from textwrap import dedent
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+file_logger_formatter = logging.Formatter('[%(levelname)s | %(asctime)s | %(filename)s | %(lineno)d] %(message)s')
+
+file_logger = logging.handlers.RotatingFileHandler("Logs/SheddingWallpapers_log", maxBytes=100000, backupCount=5)
+file_logger.setFormatter(file_logger_formatter)
+logger.addHandler(file_logger)
 
 
 # Library to set wallpaper and find desktop - Cross-platform
@@ -106,7 +117,6 @@ def is_running(process):
 
 
 def set_wallpaper(image, desktop_env):
-
     if desktop_env in ['gnome', 'unity', 'cinnamon', 'pantheon']:
 
         uri = 'file://%s' % image
@@ -224,6 +234,7 @@ def set_wallpaper(image, desktop_env):
         except:
             sys.stderr.write('Error: Failed to set wallpaper with feh!')
             sys.stderr.write('Please make sre that You have feh installed.')
+            logger.fatal("Error: Failed to set wallpaper with feh!")
 
     elif desktop_env == 'icewm':
 
@@ -297,8 +308,8 @@ def set_wallpaper(image, desktop_env):
                 ['/usr/bin/osascript', os.path.abspath(os.path.expanduser('~/.weatherdesk_script.AppleScript'))])
 
     else:
-
         sys.stderr.write('Error: Failed to set wallpaper. (Desktop not supported)')
+        logger.fatal("Error: Failed to set wallpaper. (Desktop not supported)")
         return False
 
     return True
