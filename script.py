@@ -1,93 +1,88 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+# SheddingWallpapers is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SheddingWallpapers is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WeatherDesk (in the LICENSE file).
+# If not, see <http://www.gnu.org/licenses/>.
+
 import sys
 import datetime
 import os
-import platform
 import threading
+import Desktop
+
 from screeninfo import get_monitors
 from PIL import Image
 
 
 def main():
-    if (len(sys.argv) == 2):
-        checkAlternateLDir()
+    if len(sys.argv) == 2 and os.path.isdir(sys.argv[1]):
+        apply_image(sys.argv[1])
     else:
-        transformImages()
-        applyImage("")
+        transform_images()
+        apply_image("")
 
 
-def checkAlternateLDir():
-    # todo actually check the dir
-    if (os.path.isdir(sys.argv[1])):
-        applyImage(sys.argv[1])
-    else:
-        # The dir was not found, defaulting to the regular wallpapers
-        transformImages()
-        applyImage("")
-
-
-def applyImage(filePath):
+def apply_image(file_path):
     # Grabbing the current month as an int an converting it to a name
-    currMonth = numbers_to_months()
+    curr_month = numbers_to_months()
 
     # If we are dealing with the default wallpapers
-    if not filePath:
-        currMonthFilePath = os.path.abspath("editedWallpapers/" + str(currMonth) + ".jpg")
-
-        # Checking if the user is running linux / gnome
-        if (platform.system() == "Linux" and os.environ["DESKTOP_SESSION"] == "gnome"):
-            os.system("gsettings set org.gnome.desktop.background picture-uri file:" + currMonthFilePath)
-        elif (platform.system() == "Windows"):
-            print("windows support not yet implemented")
-        elif (platform.system() == "Darwin"):
-            print("mac support not yet implemented")
+    if not file_path:
+        curr_month_file_path = os.path.abspath("editedWallpapers/" + str(curr_month) + ".jpg")
+        Desktop.set_wallpaper(curr_month_file_path, Desktop.get_desktop_environment())
     else:
         # todo implement alternate dir support
         print("")
 
 
-def transformImages():
+def transform_images():
     # If we have transformed the images then we dont want to do it again
     if os.path.exists("editedWallpapers/"):
         return
     else:
         os.makedirs("editedWallpapers/")
 
-    monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+    month_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
                   "November", "December"]
-    currWidth = getMonitorResolution()
-
-    #Keeping Track of all the threads we are currently using
-    threadArray = []
+    curr_width = get_monitor_resolution()
+    thread_array = []
 
     # Calling threads to apply the transformations to all images
-    for currMonth in monthArray:
-        thread = threading.Thread(target=upscaleImage, args=(currMonth,currWidth,))
+    for currMonth in month_array:
+        thread = threading.Thread(target=upscale_image, args=(currMonth, curr_width,))
         thread.start()
-        threadArray.append(thread)
+        thread_array.append(thread)
 
-    for currThread in threadArray:
-        print("active Threads: ", threading.active_count())
+    for currThread in thread_array:
         currThread.join()
 
 
-def upscaleImage(month, currWidth):
-    uneditedImage = Image.open("wallpapers/" + str(month) + ".jpg")
-    # Changing the size of the image, and saving the output
-    wpercent = (currWidth / float(uneditedImage.size[0]))
-    hsize = int((float(uneditedImage.size[1]) * float(wpercent)))
-    editedImage = uneditedImage.resize((currWidth, hsize), Image.LANCZOS)
-    editedImage.save("editedWallpapers/" + str(month) + ".jpg")
+def upscale_image(month, current_width):
+    unedited_image = Image.open("wallpapers/" + str(month) + ".jpg")
+    width_percent = (current_width / float(unedited_image.size[0]))
+    height_size = int((float(unedited_image.size[1]) * float(width_percent)))
+    edited_image = unedited_image.resize((current_width, height_size), Image.LANCZOS)
+    edited_image.save("editedWallpapers/" + str(month) + ".jpg")
 
 
-def getMonitorResolution():
+def get_monitor_resolution():
     width = 0
-
     # We are looping though all the monitors that the user has, and saving the largest one for transformation
     for m in get_monitors():
         print(str(m))
-        if (width < m.width):
+        if width < m.width:
             width = m.width
-
     return width
 
 
@@ -109,9 +104,9 @@ def numbers_to_months():
         '12': "December"
     }
     # Get the function from switcher dictionary
-    currMonth = datetime.datetime.now().strftime("%m")
-    func = switcher.get(currMonth.strip('0'), "ERROR: Invalid Month Passed in")
-    return func
+    unformatted_month = datetime.datetime.now().strftime("%m")
+    formatted_month = switcher.get(unformatted_month.strip('0'), "ERROR: Invalid Month")
+    return formatted_month
 
 
 if __name__ == '__main__':
