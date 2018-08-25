@@ -80,7 +80,7 @@ def transform_images():
         print("Wallpapers folder not found -- eference the log for more details")
         sys.exit(0)
 
-    logger.info("Wallpapers not transformed -- applying transformation to original images ")
+    logger.info("Wallpapers not transformed -- applying transformation to original wallpapers ")
     screen_width = get_monitor_resolution()
     upscale_info = [["January", screen_width], ["February", screen_width], ["March", screen_width],
                     ["April", screen_width], ["May", screen_width], ["June", screen_width], ["July", screen_width],
@@ -89,7 +89,7 @@ def transform_images():
 
     try:
         process_pool = Pool()
-        print("Performing upscale transformations on original images: ")
+        print("Performing upscale transformations on original wallpapers: ")
         for _ in tqdm.tqdm(process_pool.imap_unordered(upscale_image, upscale_info), desc='Images upscaled: ',
                            total=len(upscale_info), unit=' IMG'):
             pass
