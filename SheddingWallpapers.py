@@ -56,10 +56,10 @@ def apply_image(file_path):
         logger.info("Alternate image location not detected")
         transform_images()
 
-        logger.info("Applying [" + str(curr_month) + ".jpg" + "] as new wallpaper")
-        print("Applying [" + str(curr_month) + ".jpg" + "] as new wallpaper")
+        logger.info("Applying [" + str(curr_month) + ".png" + "] as new wallpaper")
+        print("Applying [" + str(curr_month) + ".png" + "] as new wallpaper")
 
-        curr_month_file_path = os.path.abspath("Edited_Wallpapers/" + str(curr_month) + ".jpg")
+        curr_month_file_path = os.path.abspath("Edited_Wallpapers/" + str(curr_month) + ".png")
         Desktop.set_wallpaper(curr_month_file_path, Desktop.get_desktop_environment())
     # If we are dealing with a directory that the user has passed in
     else:
@@ -102,11 +102,11 @@ def transform_images():
 
 
 def upscale_image(inputted_tuple):
-    unedited_image = Image.open("Wallpapers/" + str(inputted_tuple[0]) + ".jpg")
+    unedited_image = Image.open("Wallpapers/" + str(inputted_tuple[0]) + ".png")
     width_percent = (inputted_tuple[1] / float(unedited_image.size[0]))
     height_size = int((float(unedited_image.size[1]) * float(width_percent)))
     edited_image = unedited_image.resize((inputted_tuple[1], height_size), Image.LANCZOS)
-    edited_image.save("Edited_Wallpapers/" + str(inputted_tuple[0]) + ".jpg")
+    edited_image.save("Edited_Wallpapers/" + str(inputted_tuple[0]) + ".png")
 
 
 def get_monitor_resolution():
