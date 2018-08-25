@@ -19,6 +19,7 @@ import sys
 import datetime
 import os
 import Desktop
+import tqdm
 
 from screeninfo import get_monitors
 from PIL import Image
@@ -29,7 +30,6 @@ def main():
     if len(sys.argv) == 2 and os.path.isdir(sys.argv[1]):
         apply_image(sys.argv[1])
     else:
-        transform_images()
         apply_image("")
 
 
@@ -39,11 +39,11 @@ def apply_image(file_path):
 
     # If we are dealing with the default wallpapers
     if not file_path:
+        transform_images()
         curr_month_file_path = os.path.abspath("editedWallpapers/" + str(curr_month) + ".jpg")
         Desktop.set_wallpaper(curr_month_file_path, Desktop.get_desktop_environment())
     else:
-        # todo implement alternate dir support
-        print("")
+        Desktop.set_wallpaper(file_path, Desktop.get_desktop_environment())
 
 
 def transform_images():
@@ -58,9 +58,11 @@ def transform_images():
                     ["April", screen_width], ["May", screen_width], ["June", screen_width], ["July", screen_width],
                     ["August", screen_width], ["September", screen_width], ["October", screen_width],
                     ["November", screen_width], ["December", screen_width]]
-    process_pool = Pool()
 
-    process_pool.map(upscale_image, upscale_info, )
+    process_pool = Pool()
+    for _ in tqdm.tqdm(process_pool.imap_unordered(upscale_image, upscale_info), desc='Images upscaled: ',
+                       total=len(upscale_info), unit=' IMG'):
+        pass
     process_pool.close()
     process_pool.join()
 
