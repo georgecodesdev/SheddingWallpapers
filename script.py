@@ -18,11 +18,11 @@
 import sys
 import datetime
 import os
-import threading
 import Desktop
 
 from screeninfo import get_monitors
 from PIL import Image
+from multiprocessing import Pool
 
 
 def main():
@@ -53,34 +53,30 @@ def transform_images():
     else:
         os.makedirs("editedWallpapers/")
 
-    month_array = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                  "November", "December"]
-    curr_width = get_monitor_resolution()
-    thread_array = []
+    screen_width = get_monitor_resolution()
+    upscale_info = [["January", screen_width], ["February", screen_width], ["March", screen_width],
+                    ["April", screen_width], ["May", screen_width], ["June", screen_width], ["July", screen_width],
+                    ["August", screen_width], ["September", screen_width], ["October", screen_width],
+                    ["November", screen_width], ["December", screen_width]]
+    process_pool = Pool()
 
-    # Calling threads to apply the transformations to all images
-    for currMonth in month_array:
-        thread = threading.Thread(target=upscale_image, args=(currMonth, curr_width,))
-        thread.start()
-        thread_array.append(thread)
-
-    for currThread in thread_array:
-        currThread.join()
+    process_pool.map(upscale_image, upscale_info, )
+    process_pool.close()
+    process_pool.join()
 
 
-def upscale_image(month, current_width):
-    unedited_image = Image.open("wallpapers/" + str(month) + ".jpg")
-    width_percent = (current_width / float(unedited_image.size[0]))
+def upscale_image(inputted_tuple):
+    unedited_image = Image.open("wallpapers/" + str(inputted_tuple[0]) + ".jpg")
+    width_percent = (inputted_tuple[1] / float(unedited_image.size[0]))
     height_size = int((float(unedited_image.size[1]) * float(width_percent)))
-    edited_image = unedited_image.resize((current_width, height_size), Image.LANCZOS)
-    edited_image.save("editedWallpapers/" + str(month) + ".jpg")
+    edited_image = unedited_image.resize((inputted_tuple[1], height_size), Image.LANCZOS)
+    edited_image.save("editedWallpapers/" + str(inputted_tuple[0]) + ".jpg")
 
 
 def get_monitor_resolution():
     width = 0
     # We are looping though all the monitors that the user has, and saving the largest one for transformation
     for m in get_monitors():
-        print(str(m))
         if width < m.width:
             width = m.width
     return width
