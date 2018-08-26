@@ -29,12 +29,17 @@ import logging
 from logging import handlers
 from textwrap import dedent
 
+working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
+
+if not os.path.exists(os.path.abspath("{}/Logs/".format(working_directory))):
+    os.makedirs(os.path.abspath("{}/Logs/".format(working_directory)))
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 file_logger_formatter = logging.Formatter('[%(levelname)s | %(asctime)s | %(filename)s | %(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler("Logs/SheddingWallpapers_log", maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}/Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
