@@ -56,8 +56,10 @@ def main():
 
 def process_flags():
     try:
-        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:ra", ["alternate_dir=", "rebuild", "auto_start"]);
+        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start", "override="]);
         for opt, arg in opts:
+            if opt in ['-o', '--override']:
+
             if opt in ['-d', '--alternate_dir'] and os.path.exists(arg) and os.path.exists(
                     arg + "/" + numbers_to_months()):
                 apply_image(arg)
@@ -80,7 +82,7 @@ def rebuild():
         logger.warning("EditedWallpapers directory does not exist!")
     apply_image("")
 
-
+def
 def apply_image(file_path):
     # Grabbing the current month
     curr_month = numbers_to_months()
