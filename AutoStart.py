@@ -1,8 +1,30 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+# This file is part of SheddingWallpapers.
+# SheddingWallpapers is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# SheddingWallpapers is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WeatherDesk (in the LICENSE file).
+# If not, see <http://www.gnu.org/licenses/>.
+
 import sys
 import os
 import logging
 
-working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
+working_directory = ""
+if os.path.exists(sys.argv[0]):
+    working_directory = sys.argv[0].rpartition('/')[0]
+else:
+    working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -37,5 +59,6 @@ def auto_start_linux(file_name, generic_name, comment):
                                                                                                     ))
         new_file.close()
     else:
-        logging.warning("AutoStart file already exists, please remove {}{}.desktop and re-run if you wish for a new "
-                        "one to get created".format("~/.config/autostart/", file_name))
+        logging.warning("AutoStart file already exists, please remove {}{}.desktop file and re-run if you wish for a "
+                        "new "
+                        "one to get created".format("/etc/xdg/autostart", file_name))

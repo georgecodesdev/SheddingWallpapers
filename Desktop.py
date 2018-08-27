@@ -29,7 +29,11 @@ import logging
 from logging import handlers
 from textwrap import dedent
 
-working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
+working_directory = ""
+if os.path.exists(sys.argv[0]):
+    working_directory = sys.argv[0].rpartition('/')[0]
+else:
+    working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
 
 if not os.path.exists(os.path.abspath("{}/Logs/".format(working_directory))):
     os.makedirs(os.path.abspath("{}/Logs/".format(working_directory)))

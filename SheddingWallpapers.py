@@ -30,9 +30,13 @@ from PIL import Image
 from multiprocessing import Pool
 from logging import handlers
 
-working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
+working_directory = ""
+if os.path.exists(sys.argv[0]):
+    working_directory = sys.argv[0].rpartition('/')[0]
+else:
+    working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
 
-if not os.path.exists(os.path.abspath("{}/Logs/".format(working_directory))):
+if not os.path.exists(("{}/Logs/".format(working_directory))):
     os.makedirs(os.path.abspath("{}/Logs/".format(working_directory)))
 
 logger = logging.getLogger(__name__)
@@ -45,7 +49,6 @@ file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}/Logs/Shed
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
-logger.info("working dir = " +working_directory)
 
 def main():
     if len(sys.argv) > 1:
@@ -58,8 +61,6 @@ def process_flags():
     try:
         opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start", "override="]);
         for opt, arg in opts:
-            if opt in ['-o', '--override']:
-
             if opt in ['-d', '--alternate_dir'] and os.path.exists(arg) and os.path.exists(
                     arg + "/" + numbers_to_months()):
                 apply_image(arg)
@@ -75,14 +76,14 @@ def process_flags():
 
 def rebuild():
     if os.path.exists(os.path.abspath("{}/EditedWallpapers/".format(working_directory))):
-        shutil.rmtree(os.path.abspath(os.path("{}/EditedWallpapers/".format(working_directory))))
+        shutil.rmtree(os.path.abspath("{}/EditedWallpapers/".format(working_directory)))
         print("EditedWallpapers directory has been removed")
         logger.info("Removed the EditedWallpapers directory")
     else:
         logger.warning("EditedWallpapers directory does not exist!")
     apply_image("")
 
-def
+
 def apply_image(file_path):
     # Grabbing the current month
     curr_month = numbers_to_months()
@@ -105,7 +106,6 @@ def apply_image(file_path):
 
 
 def transform_images():
-    print(os.path.exists(os.path.abspath("{}/EditedWallpapers/".format(working_directory))))
     # Check to prevent us from re-transforming when we dont need to
     if os.path.exists(os.path.abspath("{}/EditedWallpapers/".format(working_directory))):
         return
@@ -126,8 +126,8 @@ def transform_images():
                     ["November", screen_width], ["December", screen_width]]
 
     try:
-        process_pool = Pool()
         print("Performing upscale transformations on original wallpapers: ")
+        process_pool = Pool()
         for _ in tqdm.tqdm(process_pool.imap_unordered(upscale_image, upscale_info), desc='Images upscaled: ',
                            total=len(upscale_info), unit=' IMG'):
             pass
