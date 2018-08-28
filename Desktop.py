@@ -317,8 +317,8 @@ def set_wallpaper(image, desktop_env):
                 ['/usr/bin/osascript', os.path.abspath(os.path.expanduser('~/.weatherdesk_script.AppleScript'))])
 
     else:
-        sys.stderr.write('Error: Failed to set wallpaper. (Desktop not supported)')
-        logger.fatal("Error: Failed to set wallpaper. (Desktop not supported)")
+        logger.critical('Error: Failed to set wallpaper. (Desktop not supported)')
+        print("Error: Failed to set wallpaper -- please run SheddingWallpapers.py with non admin/root permissions and check the README for supported platforms")
         return False
 
     return True
