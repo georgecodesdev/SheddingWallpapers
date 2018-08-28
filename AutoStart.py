@@ -21,10 +21,12 @@ import os
 import logging
 
 working_directory = ""
-if os.path.exists(sys.argv[0]):
-    working_directory = sys.argv[0].rpartition('/')[0]
-else:
-    working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
+
+if os.path.exists(sys.argv[0]) and str(sys.argv[0]).__contains__("/"):
+    working_directory = sys.argv[0].rpartition('/')[0] + "/"
+
+if not os.path.exists(os.path.abspath("{}Logs/".format(working_directory))):
+    os.makedirs("{}Logs/".format(working_directory))
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -32,7 +34,7 @@ logger.setLevel(logging.INFO)
 file_logger_formatter = logging.Formatter('[Level = %(levelname)s | Time = %(asctime)s | File = %(filename)s | Line = '
                                           '%(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}/Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
