@@ -36,7 +36,7 @@ In order to manually download the extension through github:
 
 Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my email</a>, or submit a pull request 
 
-## The Wallpapers
+## The wallpapers
 
 Please note that I take no credit for creating the wallpapers themselves, you can find the wallpapers individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
 
