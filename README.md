@@ -11,6 +11,32 @@ In order to use SheddingWallpapers you will need:
 * [screeninfo](https://pypi.org/project/screeninfo/)
 * [tqdm](https://pypi.org/project/tqdm/)
 
+### Compatability
+
+This script has been tested to work on Mac, and Windows. Linux compatability is limited to the following desktop environments:
+* gnome
+* gnome2
+* unity
+* cinnamon
+* kde
+* mate
+* xfce
+* lxde
+* fluxbox
+* blackbox
+* openbox
+* icewm
+* jwm
+* afterstep
+* trinity
+* pantheon
+* i3
+* lxqt
+* awesome
+* razor-qt
+* windowmaker
+
+
 ### Installing through Github
 
 In order to manually download the extension through github:
@@ -36,7 +62,7 @@ In order to manually download the extension through github:
 
 Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my email</a>, or submit a pull request 
 
-## The wallpapers
+## The Wallpapers
 
 Please note that I take no credit for creating the wallpapers themselves, you can find the wallpapers individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
 
