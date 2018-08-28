@@ -11,7 +11,7 @@ In order to use SheddingWallpapers you will need:
 * [screeninfo](https://pypi.org/project/screeninfo/)
 * [tqdm](https://pypi.org/project/tqdm/)
 
-### Compatability
+### Compatibility
 
 This script has been tested to work on Mac, and Windows. Linux compatability is limited to the following desktop environments:
 * gnome
