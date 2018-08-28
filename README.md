@@ -1,6 +1,6 @@
 # SheddingWallpapers
 
-<img align="right" width="250" height="250" src="/Icons/fullSize.png">
+<img align="right" width="250" height="250" src="/Icons/full_Size.png">
 
 SheddingWallpapers is an open-source python script that allows you to automatically transform and apply the stunning Google Calender wallpapers every month!
 
