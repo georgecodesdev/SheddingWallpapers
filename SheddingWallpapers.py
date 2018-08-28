@@ -68,6 +68,8 @@ def process_flags():
             if opt in ['-a', '--auto_start']:
                 AutoStart.auto_start("SheddingWallpapers", "SheddingWallpapers", "A python script to apply a "
                                                                                  "wallpaper every month")
+                print("Shedding Wallpapers is set to run on startup, if you have not ran the script without "
+                      "the -a flag, please do so before rebooting")
     except ValueError:
         logger.critical(ValueError)
         print("Critical error reached when applying transformations, reference the log for more details")
