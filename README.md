@@ -1,6 +1,6 @@
 # SheddingWallpapers
 
-<img align="right" width="250" height="250" src="/Icons/fullSize.png">
+<img align="right" width="250" height="250" src="Icons/fullSize.png">
 
 SheddingWallpapers is an open-source python script that allows you to automatically transform and apply the stunning Google Calender wallpapers every month!
 
@@ -30,15 +30,16 @@ In order to manually download the extension through github:
 - '-d' or '--alternate_dir' allows you to load wallpapers\* from an alternate directory
 - '-r' or '--rebuild' will re-transform, and apply, the default wallpapers included in this project
 - '-a' or '--auto_start' will, in addition to running the script itself, add it to automatically start on boot on desktop environments which support the [Desktop Application Autostart Specification](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html) 
-\** Note that the wallpapers included in the alternate directory must be named using the same convention as the ones included in this project. The wallpapers must be each named after the particular month you wish to see them in (ex/ 'January' for the wallpaper which will display in January
+
+\* * Note that the wallpapers included in the alternate directory must be named using the same convention as the ones included in this project. The wallpapers must be each named after the particular month you wish to see them in (ex/ 'January' for the wallpaper which will display in January
 
 ## The Original Wallpapers
 
 Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my email</a>, or submit a pull request 
 
-## The Tests
+## The Wallpapers
 
-Please note that I take no credit for creating the political tests themselves, you can find the tests individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
+Please note that I take no credit for creating the wallpapers themselves, you can find the wallpapers individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
 
 ### Authors
 
