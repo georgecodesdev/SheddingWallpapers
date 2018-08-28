@@ -7,12 +7,11 @@ SheddingWallpapers is an open-source python script that allows you to automatica
 ### Prerequisites
 
 In order to use SheddingWallpapers you will need:
-
 * [Pillow](https://pypi.org/project/Pillow/2.1.0/) 
 * [screeninfo](https://pypi.org/project/screeninfo/)
 * [tqdm](https://pypi.org/project/tqdm/)
 
-### Installing through github
+### Installing through Github
 
 In order to manually download the extension through github:
 
