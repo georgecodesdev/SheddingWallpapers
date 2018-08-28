@@ -1,1 +1,53 @@
-# MonthlyWallpapers
+# SheddingWallpapers
+
+<img align="right" width="250" height="250" src="/Icons/fullSize.png">
+
+SheddingWallpapers is an open-source python script that allows you to automatically transform and apply the stunning Google Calender wallpapers every month!
+
+### Prerequisites
+
+In order to use SheddingWallpapers you will need:
+
+* [Pillow](https://pypi.org/project/Pillow/2.1.0/) 
+* [screeninfo](https://pypi.org/project/screeninfo/)
+* [tqdm](https://pypi.org/project/tqdm/)
+
+### Installing through github
+
+In order to manually download the extension through github:
+
+```
+1. Download the project by clicking the "clone or download" button at the top of this page
+2. Once downloaded, unzip the folder
+3. If you have not done so, install the relevant prerequisites, which are listed above
+4. Navigate to the directory in which you have un-zipped the project 
+5. Simply type "python SheddingWallpapers.py [x]". If you wish you can add any of the optional parameters, in place of the '[x]' which are listed below 
+
+```
+
+### Optional Parameters
+
+- '-d' or '--alternate_dir' allows you to load wallpapers\* from an alternate directory
+- '-r' or '--rebuild' will re-transform, and apply, the default wallpapers included in this project
+- '-a' or '--auto_start' will, in addition to running the script itself, add it to automatically start on boot on desktop environments which support the [Desktop Application Autostart Specification](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html) 
+\** Note that the wallpapers included in the alternate directory must be named using the same convention as the ones included in this project. The wallpapers must be each named after the particular month you wish to see them in (ex/ 'January' for the wallpaper which will display in January
+
+## The Original Wallpapers
+
+Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my email</a>, or submit a pull request 
+
+## The Tests
+
+Please note that I take no credit for creating the political tests themselves, you can find the tests individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
+
+### Authors
+
+* **George Ridgway** - *Main Developer* - [Github](https://github.com/ridgeontheway)
+
+### License
+
+This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
+
+### Acknowledgments
+
+* The [Desktop.py](Desktop.py) module was taken from the [WeatherDesk project](https://gitlab.com/bharadwaj-raju/WeatherDesk) 
