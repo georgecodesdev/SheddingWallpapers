@@ -33,7 +33,7 @@ In order to manually download the extension through github:
 
 \* * Note that the wallpapers included in the alternate directory must be named using the same convention as the ones included in this project. The wallpapers must be each named after the particular month you wish to see them in (ex/ 'January' for the wallpaper which will display in January
 
-## The Original Wallpapers
+## Contributing
 
 Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my email</a>, or submit a pull request 
 
@@ -41,14 +41,14 @@ Please contact me through<a href="mailto:george.ridgway@protonmail.com"> my emai
 
 Please note that I take no credit for creating the wallpapers themselves, you can find the wallpapers individually [here](https://www.droid-life.com/2014/10/23/download-seasonal-backgrounds-from-new-google-calendar-app/)
 
-### Authors
+## Authors
 
 * **George Ridgway** - *Main Developer* - [Github](https://github.com/ridgeontheway)
 
-### License
+## License
 
 This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
-### Acknowledgments
+## Acknowledgments
 
 * The [Desktop.py](Desktop.py) module was taken from the [WeatherDesk project](https://gitlab.com/bharadwaj-raju/WeatherDesk) 
