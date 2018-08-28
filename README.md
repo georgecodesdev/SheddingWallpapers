@@ -21,7 +21,7 @@ In order to manually download the extension through github:
 2. Once downloaded, unzip the folder
 3. If you have not done so, install the relevant prerequisites, which are listed above
 4. Navigate to the directory in which you have un-zipped the project 
-5. Simply type "python SheddingWallpapers.py [x]". If you wish you can add any of the optional parameters, in place of the '[x]' which are listed below 
+5. Simply type "python SheddingWallpapers.py". 
 
 ```
 
