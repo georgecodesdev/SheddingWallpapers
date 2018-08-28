@@ -31,13 +31,12 @@ from multiprocessing import Pool
 from logging import handlers
 
 working_directory = ""
-if os.path.exists(sys.argv[0]):
-    working_directory = sys.argv[0].rpartition('/')[0]
-else:
-    working_directory = os.path.abspath("SheddingWallpaper").rpartition('/')[0]
 
-if not os.path.exists(("{}/Logs/".format(working_directory))):
-    os.makedirs(os.path.abspath("{}/Logs/".format(working_directory)))
+if os.path.exists(sys.argv[0]) and str(sys.argv[0]).__contains__("/"):
+    working_directory = sys.argv[0].rpartition('/')[0] + "/"
+
+if not os.path.exists(os.path.abspath("{}Logs/".format(working_directory))):
+    os.makedirs("{}Logs/".format(working_directory))
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -45,7 +44,7 @@ logger.setLevel(logging.INFO)
 file_logger_formatter = logging.Formatter('[Level = %(levelname)s | Time = %(asctime)s | File = %(filename)s | Line = '
                                           '%(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}/Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
@@ -59,7 +58,7 @@ def main():
 
 def process_flags():
     try:
-        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start", "override="]);
+        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start"]);
         for opt, arg in opts:
             if opt in ['-d', '--alternate_dir'] and os.path.exists(arg) and os.path.exists(
                     arg + "/" + numbers_to_months()):
@@ -75,8 +74,8 @@ def process_flags():
 
 
 def rebuild():
-    if os.path.exists(os.path.abspath("{}/EditedWallpapers/".format(working_directory))):
-        shutil.rmtree(os.path.abspath("{}/EditedWallpapers/".format(working_directory)))
+    if os.path.exists(os.path.abspath("{}EditedWallpapers/".format(working_directory))):
+        shutil.rmtree(os.path.abspath("{}EditedWallpapers/".format(working_directory)))
         print("EditedWallpapers directory has been removed")
         logger.info("Removed the EditedWallpapers directory")
     else:
@@ -96,7 +95,7 @@ def apply_image(file_path):
         logger.info("Applying [" + str(curr_month) + ".png" + "] as new wallpaper")
         print("Applying [" + str(curr_month) + ".png" + "] as new wallpaper")
 
-        curr_month_file_path = os.path.abspath("{}/EditedWallpapers/{}.png".format(working_directory, str(curr_month)))
+        curr_month_file_path = (os.path.abspath("{}EditedWallpapers/{}.png".format(working_directory, str(curr_month))))
         logging.info(curr_month_file_path)
         Desktop.set_wallpaper(curr_month_file_path, Desktop.get_desktop_environment())
     # If we are dealing with a directory that the user has passed in
@@ -107,12 +106,12 @@ def apply_image(file_path):
 
 def transform_images():
     # Check to prevent us from re-transforming when we dont need to
-    if os.path.exists(os.path.abspath("{}/EditedWallpapers/".format(working_directory))):
+    if os.path.exists(os.path.abspath("{}EditedWallpapers/".format(working_directory))):
         return
     else:
-        os.makedirs(os.path.abspath("{}/EditedWallpapers/".format(working_directory)))
+        os.makedirs(os.path.abspath("{}EditedWallpapers/".format(working_directory)))
 
-    if not os.path.exists(os.path.abspath("{}/Wallpapers/".format(working_directory))):
+    if not os.path.exists(os.path.abspath("{}Wallpapers/".format(working_directory))):
         logger.critical("Wallpapers folder not found -- please re-download from git repo ["
                         "https://github.com/ridgeontheway/SheddingWallpapers]")
         print("Wallpapers folder not found -- reference the log for more details")
@@ -140,11 +139,11 @@ def transform_images():
 
 
 def upscale_image(inputted_tuple):
-    unedited_image = Image.open(os.path.abspath("{}/Wallpapers/{}.png".format(working_directory, str(inputted_tuple[0]))))
+    unedited_image = Image.open(os.path.abspath("{}Wallpapers/{}.png".format(working_directory, str(inputted_tuple[0]))))
     width_percent = (inputted_tuple[1] / float(unedited_image.size[0]))
     height_size = int((float(unedited_image.size[1]) * float(width_percent)))
     edited_image = unedited_image.resize((inputted_tuple[1], height_size), Image.LANCZOS)
-    edited_image.save(os.path.abspath("{}/EditedWallpapers/{}.png".format(working_directory, str(inputted_tuple[0]))))
+    edited_image.save(os.path.abspath("{}EditedWallpapers/{}.png".format(working_directory, str(inputted_tuple[0]))))
 
 
 def get_monitor_resolution():
