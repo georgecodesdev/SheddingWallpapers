@@ -54,7 +54,7 @@ In order to manually download the extension through github:
 
 - '-d' or '--alternate_dir' allows you to load wallpapers\* from an alternate directory
 - '-r' or '--rebuild' will re-transform, and apply, the default wallpapers included in this project
-- '-a' or '--auto_start' will, in addition to running the script itself, add it to automatically start on boot on desktop environments which support the [Desktop Application Autostart Specification](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html) 
+- '-a' or '--auto_start' will add the script automatically start on boot on desktop environments which support the [Desktop Application Autostart Specification](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html). This needs to be ran with the sudo command 
 
 \* Note that the wallpapers included in the alternate directory must be named using the same convention as the ones included in this project. The wallpapers must be each named after the particular month you wish to see them in (ex/ 'January' for the wallpaper which will display in January
 
