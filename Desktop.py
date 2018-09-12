@@ -29,6 +29,7 @@ import logging
 from logging import handlers
 from textwrap import dedent
 
+# Setting up the logger and log folder
 working_directory = ""
 
 if os.path.exists(sys.argv[0]) and str(sys.argv[0]).__contains__("/"):
@@ -43,7 +44,7 @@ logger.setLevel(logging.INFO)
 file_logger_formatter = logging.Formatter('[Level = %(levelname)s | Time = %(asctime)s | File = %(filename)s | Line = '
                                           '%(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_Desktop_Log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 

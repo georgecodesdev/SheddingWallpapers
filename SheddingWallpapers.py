@@ -30,6 +30,7 @@ from PIL import Image
 from multiprocessing import Pool
 from logging import handlers
 
+# Setting up the logger and log folder
 working_directory = ""
 
 if os.path.exists(sys.argv[0]) and str(sys.argv[0]).__contains__("/"):
@@ -44,7 +45,7 @@ logger.setLevel(logging.INFO)
 file_logger_formatter = logging.Formatter('[Level = %(levelname)s | Time = %(asctime)s | File = %(filename)s | Line = '
                                           '%(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_Main_Log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
@@ -55,7 +56,7 @@ def main():
     else:
         apply_image("")
 
-
+# Processes Optional Flags
 def process_flags():
     try:
         opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start"]);
@@ -74,7 +75,7 @@ def process_flags():
         logger.critical(ValueError)
         print("Critical error reached when applying transformations, reference the log for more details")
 
-
+# Removed and Re-transforms the wallpapers
 def rebuild():
     if os.path.exists(os.path.abspath("{}EditedWallpapers/".format(working_directory))):
         shutil.rmtree(os.path.abspath("{}EditedWallpapers/".format(working_directory)))
@@ -140,6 +141,7 @@ def transform_images():
         print("Critical error reached when applying transformations, reference the log for more details")
 
 
+# Upscales the original wallpapers according to the users screen resolution
 def upscale_image(inputted_tuple):
     unedited_image = Image.open(os.path.abspath("{}Wallpapers/{}.png".format(working_directory, str(inputted_tuple[0]))))
     width_percent = (inputted_tuple[1] / float(unedited_image.size[0]))
@@ -160,7 +162,7 @@ def get_monitor_resolution():
         print("Critical error reached when fetching your monitor resolution, reference the log for more details")
 
 
-# --- Simple number to month conversions ---
+# Simple number to month conversions
 def numbers_to_months():
     switcher = {
         '1': "January",
@@ -176,7 +178,7 @@ def numbers_to_months():
         '11': "November",
         '12': "December"
     }
-    # Get the function from switcher dictionary
+
     unformatted_month = datetime.datetime.now().strftime("%m")
     formatted_month = switcher.get(unformatted_month.strip('0'), "ERROR: Invalid Month")
     return formatted_month

@@ -20,6 +20,7 @@ import sys
 import os
 import logging
 
+# Setting up the logger and log folder
 working_directory = ""
 
 if os.path.exists(sys.argv[0]) and str(sys.argv[0]).__contains__("/"):
@@ -34,7 +35,7 @@ logger.setLevel(logging.INFO)
 file_logger_formatter = logging.Formatter('[Level = %(levelname)s | Time = %(asctime)s | File = %(filename)s | Line = '
                                           '%(lineno)d] %(message)s')
 
-file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_log".format(working_directory)), maxBytes=100000, backupCount=5)
+file_logger = logging.handlers.RotatingFileHandler(os.path.abspath("{}Logs/SheddingWallpapers_AutoStart_Log".format(working_directory)), maxBytes=100000, backupCount=5)
 file_logger.setFormatter(file_logger_formatter)
 logger.addHandler(file_logger)
 
@@ -49,9 +50,8 @@ def auto_start(script_name, generic_name, comment):
 
 
 def auto_start_linux(file_name, generic_name, comment):
-    print(os.path.abspath(file_name))
-    file_path = os.path.join("/etc/xdg/autostart", "{}.desktop".format(file_name))
-    if not os.path.exists("~/.config/autostart"):
+    file_path = os.path.join("{}/.config/autostart".format(os.environ['HOME']), "{}.desktop".format(file_name))
+    if os.path.exists("{}/.config/autostart".format(os.environ['HOME'])):
         new_file = open(file_path, "w+")
         new_file.write("[Desktop Entry]\nName={}\nGenericName={}\nComment={}\nExec={"
                        "}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true".format(file_name,
