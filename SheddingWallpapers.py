@@ -75,6 +75,7 @@ def process_flags():
         logger.critical(ValueError)
         print("Critical error reached when applying transformations, reference the log for more details")
 
+
 # Removed and Re-transforms the wallpapers
 def rebuild():
     if os.path.exists(os.path.abspath("{}EditedWallpapers/".format(working_directory))):
@@ -180,7 +181,12 @@ def numbers_to_months():
     }
 
     unformatted_month = datetime.datetime.now().strftime("%m")
-    formatted_month = switcher.get(unformatted_month.strip('0'), "ERROR: Invalid Month")
+
+    if unformatted_month < 10:
+        formatted_month = switcher.get(unformatted_month.strip('0'), "ERROR: Invalid Month")
+    else:
+        formatted_month = switcher.get(unformatted_month, "ERROR: Invalid Month")
+
     return formatted_month
 
 
