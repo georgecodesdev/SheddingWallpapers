@@ -59,7 +59,7 @@ def main():
 # Processes Optional Flags
 def process_flags():
     try:
-        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start"]);
+        opts, overflow_args = getopt.getopt(sys.argv[1:], "d:rao:", ["alternate_dir=", "rebuild", "auto_start"])
         for opt, arg in opts:
             if opt in ['-d', '--alternate_dir'] and os.path.exists(arg) and os.path.exists(
                     arg + "/" + numbers_to_months()):
@@ -182,7 +182,7 @@ def numbers_to_months():
 
     unformatted_month = datetime.datetime.now().strftime("%m")
 
-    if unformatted_month < 10:
+    if int(unformatted_month) < 10:
         formatted_month = switcher.get(unformatted_month.strip('0'), "ERROR: Invalid Month")
     else:
         formatted_month = switcher.get(unformatted_month, "ERROR: Invalid Month")
@@ -192,3 +192,6 @@ def numbers_to_months():
 
 if __name__ == '__main__':
     main()
+
+
+
