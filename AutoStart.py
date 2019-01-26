@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#/usr/bin/env python3
 # coding: utf-8
 
 # This file is part of SheddingWallpapers.
@@ -51,7 +51,9 @@ def auto_start(script_name, generic_name, comment):
 
 def auto_start_linux(file_name, generic_name, comment):
     file_path = os.path.join("{}/.config/autostart".format(os.environ['HOME']), "{}.desktop".format(file_name))
-    if os.path.exists("{}/.config/autostart".format(os.environ['HOME'])):
+    if not os.path.exists("{}/.config/autostart".format(os.environ['HOME'])):
+        os.mkdir("{}/.config/autostart".format(os.environ['HOME'])) 
+    if not os.path.exists(file_path):
         new_file = open(file_path, "w+")
         new_file.write("[Desktop Entry]\nName={}\nGenericName={}\nComment={}\nExec={"
                        "}\nTerminal=false\nType=Application\nX-GNOME-Autostart-enabled=true".format(file_name,
